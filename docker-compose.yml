@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=pw
+      - MYSQL_DATABASE=thedudes
+    ports:
+      - "3306:3306"
+
+  api:
+    build:
+      context: .
+    volumes:
+      - .:/go/src/github.com/skarnecki/thedudes
+    working_dir: /go/src/github.com/skarnecki/thedudes
+    links:
+      - mysql
+    ports:
+      - "8080:8080"
